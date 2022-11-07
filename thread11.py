@@ -1,0 +1,26 @@
+from  threading import *
+l1=Lock()
+l2=Lock()
+def bookticket():
+    l1.acquire()
+    print('bookticket locked train')
+    print('bookticket wants to lock on compartment')
+    l2.acquire()
+    print('bookticket locked compartment')
+    l2.release()
+    l1.release()
+    print('booking ticket done..')
+def cancelticket():
+    l2.acquire()
+    print('cancelticket locked train')
+    print('cancelticket wants to lock on train')
+    l1.acquire()
+    print('cancelticket locked on train ')
+    l1.release()
+    l2.release()
+    print('cancellation of  ticket done..')
+t1=Thread(target=bookticket)
+t2=Thread(target=cancelticket)
+t1.start()
+t2.start()
+     
